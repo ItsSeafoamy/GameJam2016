@@ -5,11 +5,14 @@ public class Villager : Human {
 			
 	private Resource collecting;
 	
+	public float bowReload;
+	private float nextBowFire;
+	
 	public void Update(){
 		NavMeshAgent nav = GetComponent<NavMeshAgent>();
 		Enemy nearestEnemy = getNearestEnemy();
 		
-		if (nearestEnemy != null){
+		if (nearestEnemy != null && item != Item.SWORD){
 			if (Vector3.Distance(transform.position, nearestEnemy.transform.position) < 5f){
 				Vector3 dir = transform.position - nearestEnemy.transform.position;
 				dir = dir.normalized*10f;
@@ -25,12 +28,38 @@ public class Villager : Human {
 			if (collecting != null){
 				if (Vector3.Distance(transform.position, collecting.transform.position) < 2f){
 					collecting.beingHarvested = true;
+					nav.SetDestination(transform.position);
 				} else {
 					nav.SetDestination(collecting.transform.position);
 					collecting.beingHarvested = false;
 				}
 			} else {
 				collecting = getNearestResource();
+			}
+		} else if (item == Item.SWORD){
+			if (nearestEnemy != null){
+				if (Vector3.Distance(transform.position, nearestEnemy.transform.position) < 2f){
+					nearestEnemy.addHealth(-attack*Time.deltaTime);
+					nav.SetDestination(transform.position);
+				} else {
+					nav.SetDestination(nearestEnemy.transform.position);
+				}
+			}
+		} else if (item == Item.BOW){
+			if (nearestEnemy != null){
+				if (Vector3.Distance(transform.position, nearestEnemy.transform.position) < 7f){
+					nav.SetDestination(transform.position);
+					
+					nextBowFire -= Time.deltaTime;
+					
+					if (nextBowFire <= 0){
+						nextBowFire = bowReload;
+						
+						nearestEnemy.addHealth(-attack);
+					}
+				} else {
+					nav.SetDestination(nearestEnemy.transform.position);
+				}
 			}
 		}
 	}

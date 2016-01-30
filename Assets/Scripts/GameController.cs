@@ -19,6 +19,8 @@ public class GameController : MonoBehaviour {
     public Transform[] enemySpawns;
 
     public static GameObject placingObject;
+    
+    public int woodCost, stoneCost;
 
     void Start() {
 
@@ -44,21 +46,31 @@ public class GameController : MonoBehaviour {
     public void SpawnWoodenTower() {
         if (placingObject != null)
             Destroy(placingObject.gameObject);
-        placingObject = (GameObject)Instantiate(woodenTower, Mouse.MousePosition, Quaternion.identity);
-        text.text = "WoodenTower";
+            
+        if (Game.wood >= woodCost){
+        	placingObject = (GameObject)Instantiate(woodenTower, Mouse.MousePosition, Quaternion.identity);
+        	text.text = "WoodenTower";
+        } else {
+        	text.text = "You need " + (woodCost-Game.wood) + " more wood to build this";
+        }
     }
 
     public void SpawnStoneTower() {
         if (placingObject != null)
             Destroy(placingObject.gameObject);
-        placingObject = (GameObject)Instantiate(stoneTower, Mouse.MousePosition, Quaternion.identity);
-        text.text = "StoneTower";
+            
+        if (Game.stone >= stoneCost){
+       	 	placingObject = (GameObject)Instantiate(stoneTower, Mouse.MousePosition, Quaternion.identity);
+        	text.text = "StoneTower";
+        } else {
+        	text.text = "You need " + (stoneCost-Game.stone) + " more stone to build this";
+        }
     }
 
     public void SpawnBuilding() {
         if (placingObject != null)
             Destroy(placingObject.gameObject);
-
+            
         placingObject = (GameObject)Instantiate(building, Mouse.MousePosition, Quaternion.identity);
         text.text = "Building";
     }

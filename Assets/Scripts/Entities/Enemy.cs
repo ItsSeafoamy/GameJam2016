@@ -2,14 +2,24 @@
 using System.Collections;
 
 public class Enemy : Human {
-	
+
+	private Villager target;
+		
 	void Update(){
 		NavMeshAgent nav = GetComponent<NavMeshAgent>();
+		target = getNearestVillager();
 		
-		nav.SetDestination(getNearestVillager().transform.position);
+		if (target != null){
+			if (Vector3.Distance(transform.position, target.transform.position) < 1.2f){
+				target.addHealth(-attack*Time.deltaTime);
+				nav.SetDestination(transform.position);
+			} else {
+				nav.SetDestination(target.transform.position);
+			}
+		}
 	}
 	
-	private Entity getNearestVillager(){
+	private Villager getNearestVillager(){
 		Villager[] villagers = Transform.FindObjectsOfType<Villager>();
 		
 		Villager closest = null;
