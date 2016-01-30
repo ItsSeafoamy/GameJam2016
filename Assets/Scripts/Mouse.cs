@@ -18,30 +18,29 @@ public class Mouse : MonoBehaviour {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit)) {
-            //transform.position = hit.point;
-            Node node = GameController.Grid.NodeFromWorldPosition(hit.point);
+            Node node = hit.collider.GetComponent<Node>();
 
-            transform.position = node.worldPosition;
-            MousePosition = transform.position;
+            if (node != null) {
+                transform.position = node.transform.position;
+                MousePosition = transform.position;
 
-            if (!EventSystem.current.IsPointerOverGameObject()) {
-                if (GameController.placingObject != null) {
+                if (!EventSystem.current.IsPointerOverGameObject()) {
+                    if (GameController.placingObject != null) {
 
-                    GameController.placingObject.transform.position = MousePosition;
-                    if (Input.GetMouseButtonDown(0)) {
+                        GameController.placingObject.transform.position = MousePosition;
+                        if (Input.GetMouseButtonDown(0)) {
 
-                        if (node.active) {
-                            GameController.placingObject.transform.position = node.worldPosition;
-                            node.active = false;
-                            GameController.placingObject = null;
+                            if (node.active) {
+                                GameController.placingObject.transform.position = node.transform.position;
+                                node.active = false;
+                                GameController.placingObject = null;
+                            }
+
                         }
 
                     }
-
                 }
             }
         }
 	}
-
-
 }
