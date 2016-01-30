@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class LoadingScreen : MonoBehaviour {
@@ -17,11 +16,12 @@ public class LoadingScreen : MonoBehaviour {
     }
 
 	public static IEnumerator ChangeScene(string scene) {
-        int progress = 0;
+        /*int progress = 0;
         AsyncOperation async = SceneManager.LoadSceneAsync(scene);
         while (!async.isDone) {
 
-        }
+        }*/
+        Application.LoadLevelAsync(scene);
 
         yield return null;
     }

@@ -12,6 +12,11 @@ public abstract class Entity : MonoBehaviour {
 	
 	public void addHealth(float amount){
 		health += amount;
+		
+		if (health <= 0){
+			//TODO: Something on death?
+			Destroy(gameObject);
+		}
 	}
 	
 	void Start(){

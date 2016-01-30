@@ -9,7 +9,7 @@ public class Villager : Human {
 		NavMeshAgent nav = GetComponent<NavMeshAgent>();
 		Enemy nearestEnemy = getNearestEnemy();
 		
-		if (nearestEnemy != null){
+		if (nearestEnemy != null && !hasAttackingTool()){
 			if (Vector3.Distance(transform.position, nearestEnemy.transform.position) < 5f){
 				Vector3 dir = transform.position - nearestEnemy.transform.position;
 				dir = dir.normalized*10f;
@@ -25,12 +25,22 @@ public class Villager : Human {
 			if (collecting != null){
 				if (Vector3.Distance(transform.position, collecting.transform.position) < 2f){
 					collecting.beingHarvested = true;
+					nav.SetDestination(transform.position);
 				} else {
 					nav.SetDestination(collecting.transform.position);
 					collecting.beingHarvested = false;
 				}
 			} else {
 				collecting = getNearestResource();
+			}
+		} else if (hasAttackingTool()){
+			if (nearestEnemy != null){
+				if (Vector3.Distance(transform.position, nearestEnemy.transform.position) < 2f){
+					nearestEnemy.addHealth(-dps*Time.deltaTime);
+					nav.SetDestination(transform.position);
+				} else {
+					nav.SetDestination(nearestEnemy.transform.position);
+				}
 			}
 		}
 	}
