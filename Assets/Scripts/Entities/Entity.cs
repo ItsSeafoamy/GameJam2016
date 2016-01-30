@@ -3,9 +3,8 @@ using System.Collections;
 
 public abstract class Entity : MonoBehaviour {
 	
+	[SerializeField]
 	private float health, maxHealth;
-	
-	private abstract float getMaxHealth();
 	
 	public float getHealth(){
 		return health;
@@ -13,5 +12,9 @@ public abstract class Entity : MonoBehaviour {
 	
 	public void addHealth(float amount){
 		health += amount;
+	}
+	
+	void Start(){
+		health = maxHealth;
 	}
 }
