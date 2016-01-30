@@ -79,9 +79,17 @@ public class GameController : MonoBehaviour {
 
     public void ShowBuildOptions() {
         buildoptions.SetActive(true);
+        HideExplorationOptions();
     }
     public void HideBuildOptions() {
         buildoptions.SetActive(false);
+    }
+
+    public void ShowExplorationOptions() {
+        exploreBuildButton.SetActive(true);
+    }
+    public void HideExplorationOptions() {
+        exploreBuildButton.SetActive(false);
     }
 
     //void FadeIn(int i) {
@@ -117,6 +125,7 @@ public class GameController : MonoBehaviour {
             foreach(ResourceGeneration r in gen) {
                 r.GenerateResource();
             }
+            
         }
         else
             day++;
@@ -125,8 +134,10 @@ public class GameController : MonoBehaviour {
             ShowRitualScreen();
             print("Run attack code here pls thank");
         }
-
+        else {
+            ShowExplorationOptions();
+            HideBuildOptions();
+        }
         text.text = "Day: " + day;
-
     }
 }

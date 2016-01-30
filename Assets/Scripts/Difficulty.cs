@@ -17,7 +17,7 @@ public class Difficulty : MonoBehaviour {
         easy = Input.GetKeyDown(KeyCode.E);
         if (easy) {
             human += 2;
-            print("you have to  kill " + human + " hummans");
+            print("you have to  kill " + human + " humans");
         }
     }
 
@@ -25,7 +25,7 @@ public class Difficulty : MonoBehaviour {
         medium = Input.GetKeyDown(KeyCode.M);
         if (medium) {
             animal += 4;
-            print("you have to  kill " + animal + " animasl");
+            print("you have to  kill " + animal + " animals");
         }
     }
 
@@ -41,7 +41,7 @@ public class Difficulty : MonoBehaviour {
         hardest = Input.GetKeyDown(KeyCode.A);
         if (hardest) {
             ns += 8;
-            print("you have  " + ns + " no sacerfise  ");
+            print("you have  " + ns + " no sacrifice  ");
         }
     }
 
