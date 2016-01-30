@@ -120,10 +120,10 @@ public class GameController : MonoBehaviour {
     }
 
     public void SwitchAudioTrack(int i) {
-        float timestamp = audioSource.time;
-        audioSource.clip = musicTrack[i];
-        audioSource.time = timestamp;
-        audioSource.Play();
+        //float timestamp = audioSource.time;
+        //audioSource.clip = musicTrack[i];
+        //audioSource.time = timestamp;
+        //audioSource.Play();
     }
 
     void Update() {
@@ -189,6 +189,8 @@ public class GameController : MonoBehaviour {
 
         if (day == 7) {
             //ShowRitualScreen();
+            HideBuildOptions();
+
             print("Run attack code here pls thank");
             print("Nah ヽ(´ー｀)ノ");
 
