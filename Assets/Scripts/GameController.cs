@@ -17,29 +17,10 @@ public class GameController : MonoBehaviour {
 
     //Attack happens on day 7
     static int day = 1;
-
     public Transform[] enemySpawns;
-
     public static GameObject placingObject;
-    
     public int woodCost, stoneCost;
 
-    void Start() {
-
-    }
-
-    void Update() {
-        //if (Input.GetMouseButton(1)) {
-        //    FadeOut(0);
-        //    FadeIn(1);
-        //}
-
-        if (Input.GetKeyDown(KeyCode.Q))
-            ShowRitualScreen();
-
-        if (Input.GetKeyDown(KeyCode.E))
-            HideRitualScreen();
-    }
 
     public void ChangeScene(string scene) {
         StartCoroutine(LoadingScreen.ChangeScene(scene));
@@ -56,7 +37,6 @@ public class GameController : MonoBehaviour {
         	text.text = "You need " + (woodCost-Game.wood) + " more wood to build this";
         }
     }
-
     public void SpawnStoneTower() {
         if (placingObject != null)
             Destroy(placingObject.gameObject);
@@ -68,7 +48,6 @@ public class GameController : MonoBehaviour {
         	text.text = "You need " + (stoneCost-Game.stone) + " more stone to build this";
         }
     }
-
     public void SpawnBuilding() {
         if (placingObject != null)
             Destroy(placingObject.gameObject);
@@ -76,7 +55,6 @@ public class GameController : MonoBehaviour {
         placingObject = (GameObject)Instantiate(building, Mouse.MousePosition, Quaternion.identity);
         text.text = "Building";
     }
-
     public void SpawnQuarry() {
         if (placingObject != null)
             Destroy(placingObject.gameObject);
@@ -84,7 +62,6 @@ public class GameController : MonoBehaviour {
         placingObject = (GameObject)Instantiate(quarry, Mouse.MousePosition, Quaternion.identity);
         text.text = "Quarry";
     }
-
     public void SpawnLogPost() {
         if (placingObject != null)
             Destroy(placingObject.gameObject);
@@ -96,9 +73,15 @@ public class GameController : MonoBehaviour {
     public void ShowRitualScreen() {
         ritualScreen.SetActive(true);
     }
-
     public void HideRitualScreen() {
         ritualScreen.SetActive(false);
+    }
+
+    public void ShowBuildOptions() {
+        buildoptions.SetActive(true);
+    }
+    public void HideBuildOptions() {
+        buildoptions.SetActive(false);
     }
 
     //void FadeIn(int i) {
@@ -118,13 +101,14 @@ public class GameController : MonoBehaviour {
     public void AnimalSacrifice() {
         HideRitualScreen();
     }
+
     public void ResourceSacrifice() {
         HideRitualScreen();
     }
+
     public void NoSacrifice() {
         HideRitualScreen();
     }
-
 
     public void ProgressDay() {
         if (day == 7) {

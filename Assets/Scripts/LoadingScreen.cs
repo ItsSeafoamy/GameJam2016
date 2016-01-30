@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class LoadingScreen : MonoBehaviour {
@@ -21,7 +22,7 @@ public class LoadingScreen : MonoBehaviour {
         while (!async.isDone) {
 
         }*/
-        Application.LoadLevelAsync(scene);
+        SceneManager.LoadSceneAsync(scene);
 
         yield return null;
     }
