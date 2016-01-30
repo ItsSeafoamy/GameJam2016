@@ -64,12 +64,12 @@ public class TownGrid : MonoBehaviour {
     void OnDrawGizmos() {
         Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
 
-        if (grid != null) {
-            foreach (Node n in grid) {
-                //Gizmos.color = (n.active) ? Color.blue : Color.red;
-                //Gizmos.DrawCube(n.worldPosition, Vector3.one * 0.9f);
-            }
-        }
+        //if (grid != null) {
+        //    foreach (Node n in grid) {
+        //        //Gizmos.color = (n.active) ? Color.blue : Color.red;
+        //        //Gizmos.DrawCube(n.worldPosition, Vector3.one * 0.9f);
+        //    }
+        //}
     }
 
 }

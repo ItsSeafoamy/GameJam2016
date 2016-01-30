@@ -16,11 +16,16 @@ public class GameController : MonoBehaviour {
     public GameObject[] ritualButtons;
 
     //Attack happens on day 7
-    static int day = 1;
+    static int day = 1; //Why dis start at 1 (>﹏<)
+    static int week = 0;
     public Transform[] enemySpawns;
     public static GameObject placingObject;
     public int woodCost, stoneCost;
 
+    public int atkVil, othVil, stone, wood;
+
+    private float target = 0;
+    private bool awaitingRitual;
 
     public void ChangeScene(string scene) {
         StartCoroutine(LoadingScreen.ChangeScene(scene));
@@ -121,6 +126,7 @@ public class GameController : MonoBehaviour {
     public void ProgressDay() {
         if (day == 7) {
             day = 1;
+            week++;
             ResourceGeneration[] gen = FindObjectsOfType<ResourceGeneration>();
             foreach(ResourceGeneration r in gen) {
                 r.GenerateResource();
@@ -131,8 +137,15 @@ public class GameController : MonoBehaviour {
             day++;
 
         if (day == 7) {
-            ShowRitualScreen();
+            //ShowRitualScreen();
             print("Run attack code here pls thank");
+            print("Nah ヽ(´ー｀)ノ");
+
+            target = Mathf.Pow(week+1, 1.5f);
+
+            text.text = "Select Villagers or resources to sacrifice";
+            Time.timeScale = 0;
+            awaitingRitual = true;
         }
         else {
             ShowExplorationOptions();
