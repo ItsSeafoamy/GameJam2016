@@ -9,14 +9,14 @@ public class ResourceGeneration : MonoBehaviour {
 	
 	}
 	
-    void GenerateResource() {
-        int random = Random.Range(1, 25);
+    public void GenerateResource() {
+        int random = Random.Range(1, 3);
         if (random == 1)
             Instantiate(resource, transform.position + Vector3.up, Quaternion.identity);
     }
 
 	// Update is called once per frame
 	void Update () {
-        GenerateResource();
+        //GenerateResource();
 	}
 }

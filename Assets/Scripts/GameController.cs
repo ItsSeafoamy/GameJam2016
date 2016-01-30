@@ -8,9 +8,11 @@ public class GameController : MonoBehaviour {
 
     public Text text;
     public Transform directionalLight;
-    public GameObject woodenTower, stoneTower, building;
+    public GameObject woodenTower, stoneTower, building, quarry, logPost;
     public GameObject enemy;
     public GameObject ritualScreen;
+    public GameObject exploreBuildButton;
+    public GameObject buildoptions;
     public GameObject[] ritualButtons;
 
     //Attack happens on day 7
@@ -75,6 +77,22 @@ public class GameController : MonoBehaviour {
         text.text = "Building";
     }
 
+    public void SpawnQuarry() {
+        if (placingObject != null)
+            Destroy(placingObject.gameObject);
+            
+        placingObject = (GameObject)Instantiate(quarry, Mouse.MousePosition, Quaternion.identity);
+        text.text = "Quarry";
+    }
+
+    public void SpawnLogPost() {
+        if (placingObject != null)
+            Destroy(placingObject.gameObject);
+            
+        placingObject = (GameObject)Instantiate(logPost, Mouse.MousePosition, Quaternion.identity);
+        text.text = "Logging Post";
+    }
+
     public void ShowRitualScreen() {
         ritualScreen.SetActive(true);
     }
@@ -111,6 +129,10 @@ public class GameController : MonoBehaviour {
     public void ProgressDay() {
         if (day == 7) {
             day = 1;
+            ResourceGeneration[] gen = FindObjectsOfType<ResourceGeneration>();
+            foreach(ResourceGeneration r in gen) {
+                r.GenerateResource();
+            }
         }
         else
             day++;
