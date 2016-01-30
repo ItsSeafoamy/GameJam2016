@@ -10,8 +10,8 @@ public class Enemy : Human {
 		target = getNearestVillager();
 		
 		if (target != null){
-			if (Vector3.Distance(transform.position, target.transform.position) < 2f){
-				target.addHealth(-dps*Time.deltaTime);
+			if (Vector3.Distance(transform.position, target.transform.position) < 1.2f){
+				target.addHealth(-attack*Time.deltaTime);
 				nav.SetDestination(transform.position);
 			} else {
 				nav.SetDestination(target.transform.position);

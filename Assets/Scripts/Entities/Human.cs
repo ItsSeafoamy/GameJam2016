@@ -7,7 +7,7 @@ public abstract class Human : Entity {
 	
 	public Item item;
 	
-	public float dps;
+	public float attack;
 	
 	public bool hasHarvestTool(){
 		return item == Item.AXE || item == Item.PICKAXE;
