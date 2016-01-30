@@ -5,6 +5,7 @@ public class TownGrid : MonoBehaviour {
 
     public Vector2 gridWorldSize;
     public float nodeRadius;
+    public GameObject tilePrefab;
 
     Node[,] grid;
 
@@ -34,6 +35,8 @@ public class TownGrid : MonoBehaviour {
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
 
                 grid[x, y] = new Node(worldPoint, true, x, y);
+                GameObject tile = (GameObject)Instantiate(tilePrefab, worldPoint, Quaternion.identity);
+                tile.transform.parent = transform;
             }
         }
     }
