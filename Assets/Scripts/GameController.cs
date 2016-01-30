@@ -8,6 +8,10 @@ public class GameController : MonoBehaviour {
 
     public Text text;
     public GameObject woodenTower, stoneTower, building;
+    public GameObject enemy;
+
+    public Transform[] enemySpawns;
+
     public static GameObject placingObject;
 
     public void ChangeScene(string scene) {
@@ -29,5 +33,8 @@ public class GameController : MonoBehaviour {
         text.text = "Building";
     }
 
+    public static void SpawnEnemies(int difficulty) {
+
+    }
 
 }
