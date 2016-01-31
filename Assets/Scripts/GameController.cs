@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameController : MonoBehaviour {
     public static bool InputEnabled { get; set; }
@@ -18,10 +19,14 @@ public class GameController : MonoBehaviour {
     public AudioClip[] musicTrack;
     public Text explorationText;
     Exploration exploration;
+    Difficulty difficulty;
     public Text detailName;
     public Text sacrificeBtn;
     public GameObject details;
     public LayerMask villagerLayer;
+    public GameObject enemyParent;
+    Enemy[] enemies;
+    Villager[] villagers;
 
     //Attack happens on day 7
     static int day = 1; //Why dis start at 1 (>﹏<)
@@ -193,6 +198,7 @@ public class GameController : MonoBehaviour {
 
     public void HumanSacrifice() {
         HideRitualScreen();
+        difficulty.easyMode();
     }
 
     public void AnimalSacrifice() {
@@ -217,14 +223,17 @@ public class GameController : MonoBehaviour {
         if (day == 7) {
             day = 1;
             week++;
+
+            
+        }
+        else {
+            day++;
             ResourceGeneration[] gen = FindObjectsOfType<ResourceGeneration>();
             foreach(ResourceGeneration r in gen) {
                 r.GenerateResource();
             }
-            
+            print("Generate");
         }
-        else
-            day++;
 
         SwitchAudioTrack(day-1);
 
@@ -250,7 +259,18 @@ public class GameController : MonoBehaviour {
         }
         text.text = "Day: " + day;
     }
-	void Awake() {
+
+    public void Attack() {
+        enemies = FindObjectsOfType<Enemy>();
+        villagers = FindObjectsOfType<Villager>();
+
+        if (enemies.Length == 0)
+            ProgressDay();
+        if (villagers.Length == 0)
+            print("GAME OVER");
+    }
+
+    void Awake() {
 		audioSource = GetComponent<AudioSource> ();
 	}
 }
