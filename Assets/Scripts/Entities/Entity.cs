@@ -26,5 +26,6 @@ public abstract class Entity : MonoBehaviour {
 	
 	void Start(){
 		health = maxHealth;
+
 	}
 }
