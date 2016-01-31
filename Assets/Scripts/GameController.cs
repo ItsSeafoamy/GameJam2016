@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour {
     public int woodCost, stoneCost;
 
     public int atkVil, othVil, stone, wood;
+    public Text woodCount, stoneCount;
 
     private float target = 0;
     private bool awaitingRitual;
@@ -138,13 +139,16 @@ public class GameController : MonoBehaviour {
     }
 
     void Update() {
+        if (woodCount != null)
+            woodCount.text = Game.wood.ToString();
+
+        if (stoneCount != null)
+            stoneCount.text = Game.stone.ToString();
 
         if (Input.GetMouseButtonDown(0) && InputEnabled) {
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1000f, villagerLayer))/* (1 << 0x09) + (1 << 0x10)))*/{
-                selected = hit.collider.GetComponent<Villager>();
-                //GameObject target = hit.collider.gameObject;
-                //print(target.name);
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1000f, /*villagerLayer))/**/ (1 << 0x09) | (1 << 0x0A))){
+                selected = hit.collider.GetComponent<Entity>();
                 if(selected!=null)
                 detailName.text = selected.getName();
 
@@ -155,6 +159,7 @@ public class GameController : MonoBehaviour {
                 }
             } else {
                 selected = null;
+                details.SetActive(false);
             }
         }
     }
@@ -224,7 +229,6 @@ public class GameController : MonoBehaviour {
         SwitchAudioTrack(day-1);
 
         if (day == 7) {
-            //ShowRitualScreen();
             HideBuildOptions();
 
             print("Run attack code here pls thank");
@@ -233,7 +237,7 @@ public class GameController : MonoBehaviour {
             target = Mathf.Pow(week+1, 1.5f);
 
             text.text = "Select Villagers or resources to sacrifice";
-            Time.timeScale = 0;
+            //Time.timeScale = 0;
             awaitingRitual = true;
 
             sacrificeBtn.text = "Sacrifice";

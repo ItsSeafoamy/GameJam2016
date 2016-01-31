@@ -14,35 +14,22 @@ public class Difficulty : MonoBehaviour {
 
 
     public void easyMode() {
-        easy = Input.GetKeyDown(KeyCode.E);
-        if (easy) {
-            human += 2;
-            print("you have to  kill " + human + " humans");
-        }
+        human += 2;
+        print("you have to  kill " + human + " humans");
     }
 
     public void mediumMode() {
-        medium = Input.GetKeyDown(KeyCode.M);
-        if (medium) {
-            animal += 4;
-            print("you have to  kill " + animal + " animals");
-        }
+        animal += 4;
+        print("you have to  kill " + animal + " animals");
     }
 
     public void hardMode() {
-        hard = Input.GetKeyDown(KeyCode.H);
-        if (hard) {
-            resource += 6;
-            print("you have  " + resource + " resource");
-        }
+        resource += 6;
+        print("you have  " + resource + " resource");
     }
 
     public void hardestMode() {
-        hardest = Input.GetKeyDown(KeyCode.A);
-        if (hardest) {
-            ns += 8;
-            print("you have  " + ns + " no sacrifice  ");
-        }
+        ns += 8;
+        print("you have  " + ns + " no sacrifice  ");
     }
-
 }
