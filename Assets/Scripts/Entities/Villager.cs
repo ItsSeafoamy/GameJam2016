@@ -55,9 +55,16 @@ public class Villager : Human {
         else if (item == Item.SWORD) {
             if (nearestEnemy != null) {
                 if (Vector3.Distance(transform.position, nearestEnemy.transform.position) < 2f) {
-                    nearestEnemy.addHealth(-attack * Time.deltaTime);
-                    source.Play();
                     nav.SetDestination(transform.position);
+
+                    nextBowFire -= Time.deltaTime;
+
+                    if (nextBowFire <= 0) {
+                        nextBowFire = bowReload;
+                        nearestEnemy.addHealth(-attack);
+                        source.Play();
+                    }
+                    
                 }
                 else {
                     nav.SetDestination(nearestEnemy.transform.position);

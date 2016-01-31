@@ -366,8 +366,8 @@ public class GameController : MonoBehaviour {
                     }
                 }
                 break;
-            case 2:
-                for (int e = 0; e < 8 + difficulty.ns; e++) {
+                 case 2:
+                for (int e = 0; e < 5 + difficulty.stone; e++) {
                     random = Random.Range(0, 1);
                     if (random == 0) {
                         pos = new Vector3(Random.Range(minX, maxX), 1, Random.Range(minZ, maxZ));
@@ -375,6 +375,21 @@ public class GameController : MonoBehaviour {
                     }
                     else {
                         pos = new Vector3(Random.Range(minX, maxX), 1, Random.Range(minZ, maxZ));
+                        Instantiate(enemyBow, pos, Quaternion.identity);
+                    }
+                }
+                break;
+            case 3:
+                for (int e = 0; e < 8 + difficulty.ns; e++) {
+                    random = Random.Range(0, 1);
+                    if (random == 0) {
+                        pos = new Vector3(Random.Range(minX, maxX), 1, Random.Range(minZ, maxZ));
+                        print("Spawn enemy pls");
+                        Instantiate(enemySword, pos, Quaternion.identity);
+                    }
+                    else {
+                        pos = new Vector3(Random.Range(minX, maxX), 1, Random.Range(minZ, maxZ));
+                        print("Spawn enemy pls");
                         Instantiate(enemyBow, pos, Quaternion.identity);
                     }
                 }
