@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour {
     Villager[] villagers;
 
     //Attack happens on day 7
-    static int day = 6; //Why dis start at 1 (>﹏<) //Cos you start on day one silly!
+    static int day = 1; //Why dis start at 1 (>﹏<) //Cos you start on day one silly!
     static int week = 0;
     public Transform[] enemySpawns;
     public static GameObject placingObject;
