@@ -5,8 +5,11 @@ public abstract class Entity : MonoBehaviour {
 	
 #pragma warning disable 0649
 	[SerializeField]
-	private float health, maxHealth;
+	private float maxHealth;
+    private float health;
 #pragma warning restore 0649
+
+    public abstract string getName();
 	
 	public float getHealth(){
 		return health;

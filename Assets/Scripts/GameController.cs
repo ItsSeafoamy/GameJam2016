@@ -31,6 +31,8 @@ public class GameController : MonoBehaviour {
     private float target = 0;
     private bool awaitingRitual;
 
+    private Entity selected;
+
     public void ChangeScene(string scene) {
         StartCoroutine(LoadingScreen.ChangeScene(scene));
     }
@@ -131,6 +133,13 @@ public class GameController : MonoBehaviour {
             SwitchAudioTrack(1);
         if (Input.GetKeyDown(KeyCode.Q))
             SwitchAudioTrack(0);
+
+        if (Input.GetMouseButtonDown(0)) {
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1000f, (1 << 0x09) + (1 << 0x10))){
+                Entity entity = hit.collider.GetComponent<Entity>();
+            }
+        }
     }
 
     public void Explore() {
@@ -185,7 +194,7 @@ public class GameController : MonoBehaviour {
         else
             day++;
 
-        SwitchAudioTrack(day);
+        SwitchAudioTrack(day-1);
 
         if (day == 7) {
             //ShowRitualScreen();

@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Enemy : Human {
 
 	private Villager target;
-		
-	void Update(){
+
+    public override string getName() {
+        return "Enemy";
+    }
+
+    void Update(){
 		NavMeshAgent nav = GetComponent<NavMeshAgent>();
 		target = getNearestVillager();
 		

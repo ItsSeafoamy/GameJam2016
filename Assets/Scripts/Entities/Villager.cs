@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Villager : Human {
 
@@ -7,6 +8,14 @@ public class Villager : Human {
 
     public float bowReload;
     private float nextBowFire;
+
+    public override string getName() {
+        if (item == Item.AXE) return "Lumberjack";
+        else if (item == Item.PICKAXE) return "Miner";
+        else if (item == Item.SWORD) return "Swordsman";
+        else if (item == Item.BOW) return "Archer";
+        else return "idk";
+    }
 
     public void Update() {
         NavMeshAgent nav = GetComponent<NavMeshAgent>();

@@ -17,7 +17,7 @@ public class Mouse : MonoBehaviour {
         mesh.Rotate(0, 1, 0);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, 1000, ~(1 << 0x10))) {
+        if (Physics.Raycast(ray, out hit, 1000, ~((1 << 0x10) + (1 << 0x02)))) {
             Node node = hit.collider.GetComponent<Node>();
 
             if (node != null) {
