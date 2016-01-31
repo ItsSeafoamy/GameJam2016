@@ -4,7 +4,7 @@ using System.Collections;
 public class Difficulty : MonoBehaviour {
 
     bool easy;
-    public int human = 0;
+    public int human = 1;
     bool hard;
     int animal = 0;
     bool medium;
@@ -31,7 +31,7 @@ public class Difficulty : MonoBehaviour {
     }
 
     public void easyMode() {
-        human += 2;
+        human += 1;
         print("you have to  kill " + human + " humans");
     }
 
