@@ -10,7 +10,7 @@ public class GameController : MonoBehaviour {
     public Text text;
     public Transform directionalLight;
     public GameObject woodenTower, stoneTower, building, quarry, logPost;
-    public GameObject enemy;
+    public GameObject enemySword, enemyBow;
     public GameObject ritualScreen;
     public GameObject exploreBuildButton;
     public GameObject buildoptions;
@@ -24,12 +24,11 @@ public class GameController : MonoBehaviour {
     public Text sacrificeBtn;
     public GameObject details;
     public LayerMask villagerLayer;
-    public GameObject enemyParent;
     Enemy[] enemies;
     Villager[] villagers;
 
     //Attack happens on day 7
-    static int day = 1; //Why dis start at 1 (>﹏<)
+    static int day = 6; //Why dis start at 1 (>﹏<) //Cos you start on day one silly!
     static int week = 0;
     public Transform[] enemySpawns;
     public static GameObject placingObject;
@@ -45,6 +44,7 @@ public class GameController : MonoBehaviour {
 
     void Start() {
         exploration = GetComponent<Exploration>();
+        difficulty = GetComponent<Difficulty>();
         InputEnabled = true;
     }
 
@@ -164,8 +164,13 @@ public class GameController : MonoBehaviour {
                 }
             } else {
                 selected = null;
-                details.SetActive(false);
+                //details.SetActive(false);
             }
+        }
+
+        if (day == 7) {
+            if (!awaitingRitual)
+                Attack();
         }
     }
 
@@ -197,20 +202,30 @@ public class GameController : MonoBehaviour {
     //}
 
     public void HumanSacrifice() {
+       // Debug.Break();
+        print("Humans Sacrificed");
+        
+        difficulty.SetAttack(0);
+        StartAttack(0);
         HideRitualScreen();
-        difficulty.easyMode();
     }
 
     public void AnimalSacrifice() {
-        HideRitualScreen();
+        HideRitualScreen(); 
     }
 
     public void ResourceSacrifice() {
+        print("Resources Sacrificed");
         HideRitualScreen();
+        difficulty.SetAttack(1);
+        StartAttack(1);
     }
 
     public void NoSacrifice() {
+        print("No Sacrifice");
         HideRitualScreen();
+        difficulty.SetAttack(2);
+        StartAttack(2);
     }
 
     public void Sacrifice() {
@@ -223,8 +238,6 @@ public class GameController : MonoBehaviour {
         if (day == 7) {
             day = 1;
             week++;
-
-            
         }
         else {
             day++;
@@ -240,16 +253,14 @@ public class GameController : MonoBehaviour {
         if (day == 7) {
             HideBuildOptions();
 
-            print("Run attack code here pls thank");
-            print("Nah ヽ(´ー｀)ノ");
-
             target = Mathf.Pow(week+1, 1.5f);
 
             text.text = "Select Villagers or resources to sacrifice";
-            //Time.timeScale = 0;
             awaitingRitual = true;
-
+            ShowRitualScreen();
+            HideExplorationOptions();
             sacrificeBtn.text = "Sacrifice";
+            
         }
         else {
             ShowExplorationOptions();
@@ -258,6 +269,58 @@ public class GameController : MonoBehaviour {
             sacrificeBtn.text = "You can't sacrifice yet";
         }
         text.text = "Day: " + day;
+    }
+
+    public void StartAttack(int i) {
+        print("Starting attack");
+        int random;
+        Vector3 pos;
+        float minX =-9;
+        float maxX = 9;
+        float minZ = -9;
+        float maxZ = 9;
+        switch (i) {
+            case 0:
+                for (int e = 0; e < 2 + difficulty.human; e++) {
+                    random = Random.Range(0, 1);
+                    if (random == 0) {
+                        pos = new Vector3(Random.Range(minX, maxX), 1, Random.Range(minZ, maxZ));
+                        Instantiate(enemySword, pos, Quaternion.identity);
+                    }
+                    else {
+                        pos = new Vector3(Random.Range(minX, maxX), 1, Random.Range(minZ, maxZ));
+                        Instantiate(enemyBow, pos, Quaternion.identity);
+                    }
+                }
+                break;
+            case 1:
+                for (int e = 0; e < 5 + difficulty.resource; e++) {
+                    random = Random.Range(0, 1);
+                    if (random == 0) {
+                        pos = new Vector3(Random.Range(minX, maxX), 1, Random.Range(minZ, maxZ));
+                        Instantiate(enemySword, pos, Quaternion.identity);
+                    }
+                    else {
+                        pos = new Vector3(Random.Range(minX, maxX), 1, Random.Range(minZ, maxZ));
+                        Instantiate(enemyBow, pos, Quaternion.identity);
+                    }
+                }
+                break;
+            case 2:
+                for (int e = 0; e < 8 + difficulty.ns; e++) {
+                    random = Random.Range(0, 1);
+                    if (random == 0) {
+                        pos = new Vector3(Random.Range(minX, maxX), 1, Random.Range(minZ, maxZ));
+                        Instantiate(enemySword, pos, Quaternion.identity);
+                    }
+                    else {
+                        pos = new Vector3(Random.Range(minX, maxX), 1, Random.Range(minZ, maxZ));
+                        Instantiate(enemyBow, pos, Quaternion.identity);
+                    }
+                }
+                break;
+        }
+        awaitingRitual = false;
     }
 
     public void Attack() {

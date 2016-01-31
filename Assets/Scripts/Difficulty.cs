@@ -4,14 +4,27 @@ using System.Collections;
 public class Difficulty : MonoBehaviour {
 
     bool easy;
-    int human = 0;
+    public int human = 0;
     bool hard;
     int animal = 0;
     bool medium;
-    int ns;
-    int resource = 0;
+    public int ns;
+    public int resource = 0;
     bool hardest;
 
+    public void SetAttack(int i) {
+        switch (i) {
+            case 0:
+                easyMode();
+                break;
+            case 1:
+                hardMode();
+                break;
+            case 2:
+                hardestMode();
+                break;
+        }
+    }
 
     public void easyMode() {
         human += 2;
