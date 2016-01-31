@@ -18,6 +18,9 @@ public class GameController : MonoBehaviour {
     public AudioClip[] musicTrack;
     public Text explorationText;
     public Exploration exploration;
+    public Text detailName;
+    public Text sacrificeBtn;
+    public GameObject details;
 
     //Attack happens on day 7
     static int day = 1; //Why dis start at 1 (>﹏<)
@@ -137,7 +140,17 @@ public class GameController : MonoBehaviour {
         if (Input.GetMouseButtonDown(0)) {
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1000f, (1 << 0x09) + (1 << 0x10))){
-                Entity entity = hit.collider.GetComponent<Entity>();
+                selected = hit.collider.GetComponent<Entity>();
+
+                detailName.text = selected.getName();
+
+                details.SetActive(true);
+
+                if (selected is Villager) {
+
+                }
+            } else {
+                selected = null;
             }
         }
     }
@@ -181,6 +194,12 @@ public class GameController : MonoBehaviour {
         HideRitualScreen();
     }
 
+    public void Sacrifice() {
+        if (selected is Villager) {
+
+        }
+    }
+
     public void ProgressDay() {
         if (day == 7) {
             day = 1;
@@ -208,10 +227,14 @@ public class GameController : MonoBehaviour {
             text.text = "Select Villagers or resources to sacrifice";
             Time.timeScale = 0;
             awaitingRitual = true;
+
+            sacrificeBtn.text = "Sacrifice";
         }
         else {
             ShowExplorationOptions();
             HideBuildOptions();
+
+            sacrificeBtn.text = "You can't sacrifice yet";
         }
         text.text = "Day: " + day;
     }
