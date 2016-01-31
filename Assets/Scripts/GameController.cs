@@ -125,10 +125,10 @@ public class GameController : MonoBehaviour {
     }
 
     public void SwitchAudioTrack(int i) {
-        //float timestamp = audioSource.time;
-        //audioSource.clip = musicTrack[i];
-        //audioSource.time = timestamp;
-        //audioSource.Play();
+        float timestamp = audioSource.time;
+        audioSource.clip = musicTrack[i];
+        audioSource.time = timestamp;
+        audioSource.Play();
     }
 
     void Update() {
@@ -169,13 +169,13 @@ public class GameController : MonoBehaviour {
     }
 
     //void FadeIn(int i) {
-    //    if (audioChannels[i].volume < 1)
-    //        audioChannels[i].volume += 1 * Time.deltaTime;
-    //}
+      // if (audioChannels[i].volume < 1)
+          // audioChannels[i].volume += 1 * Time.deltaTime;
+   // }
 
     //void FadeOut(int i) {
-    //    if (audioChannels[i].volume > 1)
-    //        audioChannels[i].volume -= 1 * Time.deltaTime;
+      //  if (audioChannels[i].volume > 1)
+        //    audioChannels[i].volume -= 1 * Time.deltaTime;
     //}
 
     public void HumanSacrifice() {
@@ -238,4 +238,7 @@ public class GameController : MonoBehaviour {
         }
         text.text = "Day: " + day;
     }
+	void Awake() {
+		audioSource = GetComponent<AudioSource> ();
+	}
 }
