@@ -17,10 +17,11 @@ public class GameController : MonoBehaviour {
     public AudioSource audioSource;
     public AudioClip[] musicTrack;
     public Text explorationText;
-    public Exploration exploration;
+    Exploration exploration;
     public Text detailName;
     public Text sacrificeBtn;
     public GameObject details;
+    public LayerMask villagerLayer;
 
     //Attack happens on day 7
     static int day = 1; //Why dis start at 1 (>﹏<)
@@ -35,6 +36,11 @@ public class GameController : MonoBehaviour {
     private bool awaitingRitual;
 
     private Entity selected;
+
+    void Start() {
+        exploration = GetComponent<Exploration>();
+        InputEnabled = true;
+    }
 
     public void ChangeScene(string scene) {
         StartCoroutine(LoadingScreen.ChangeScene(scene));
@@ -132,16 +138,14 @@ public class GameController : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.E))
-            SwitchAudioTrack(1);
-        if (Input.GetKeyDown(KeyCode.Q))
-            SwitchAudioTrack(0);
 
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && InputEnabled) {
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1000f, (1 << 0x09) + (1 << 0x10))){
-                selected = hit.collider.GetComponent<Entity>();
-
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 1000f, villagerLayer))/* (1 << 0x09) + (1 << 0x10)))*/{
+                selected = hit.collider.GetComponent<Villager>();
+                //GameObject target = hit.collider.gameObject;
+                //print(target.name);
+                if(selected!=null)
                 detailName.text = selected.getName();
 
                 details.SetActive(true);
@@ -156,16 +160,20 @@ public class GameController : MonoBehaviour {
     }
 
     public void Explore() {
-        explorationText.gameObject.SetActive(true);
-        explorationText.text = exploration.Explore();
-        StartCoroutine("Wait");
+        if (InputEnabled) {
+            explorationText.gameObject.SetActive(true);
+            explorationText.text = exploration.Explore();
+            StartCoroutine("Wait");
+        }
     }
 
     IEnumerator Wait() {
+        InputEnabled = false;
         yield return new WaitForSeconds(3);
 
         explorationText.gameObject.SetActive(false);
         ProgressDay();
+        InputEnabled = true;
     }
 
     //void FadeIn(int i) {
