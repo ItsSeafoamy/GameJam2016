@@ -8,6 +8,10 @@ public class Enemy : Human {
     public float bowReload;
     private float nextBowFire;
 
+    void Start() {
+        base.Start();
+    }
+
     public override string getName() {
         return "Enemy";
     }
@@ -20,6 +24,7 @@ public class Enemy : Human {
             if (target != null) {
                 if (Vector3.Distance(transform.position, target.transform.position) < 2f) {
                     target.addHealth(-attack * Time.deltaTime);
+                    source.Play();
                     nav.SetDestination(transform.position);
                 }
                 else {
@@ -38,12 +43,14 @@ public class Enemy : Human {
                         nextBowFire = bowReload;
 
                         target.addHealth(-attack);
+                        source.Play();
                     }
                 }
 
                 if (target != null) {
                     if (Vector3.Distance(transform.position, target.transform.position) < 1.2f) {
                         target.addHealth(-attack * Time.deltaTime);
+                        source.Play();
                         nav.SetDestination(transform.position);
                     }
                     else {

@@ -9,7 +9,8 @@ public class Difficulty : MonoBehaviour {
     int animal = 0;
     bool medium;
     public int ns;
-    public int resource = 0;
+    public int wood = 6;
+    public int stone = 6;
     bool hardest;
 
     public void SetAttack(int i) {
@@ -18,9 +19,12 @@ public class Difficulty : MonoBehaviour {
                 easyMode();
                 break;
             case 1:
-                hardMode();
+                SacrificeWood();
                 break;
-            case 2:
+                case 2:
+                SacrificeStone();
+                break;
+            case 3:
                 hardestMode();
                 break;
         }
@@ -36,9 +40,13 @@ public class Difficulty : MonoBehaviour {
         print("you have to  kill " + animal + " animals");
     }
 
-    public void hardMode() {
-        resource += 6;
-        print("you have  " + resource + " resource");
+    public void SacrificeWood() {
+        wood += 3;
+        print("you have  " + wood + " resource");
+    }
+    public void SacrificeStone() {
+        stone += 3;
+        print("you have  " + stone + " resource");
     }
 
     public void hardestMode() {

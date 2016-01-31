@@ -9,6 +9,10 @@ public class Villager : Human {
     public float bowReload;
     private float nextBowFire;
 
+    void Start() {
+        base.Start();
+    }
+
     public override string getName() {
         if (item == Item.AXE) return "Lumberjack";
         else if (item == Item.PICKAXE) return "Miner";
@@ -52,6 +56,7 @@ public class Villager : Human {
             if (nearestEnemy != null) {
                 if (Vector3.Distance(transform.position, nearestEnemy.transform.position) < 2f) {
                     nearestEnemy.addHealth(-attack * Time.deltaTime);
+                    source.Play();
                     nav.SetDestination(transform.position);
                 }
                 else {
@@ -70,6 +75,7 @@ public class Villager : Human {
                         nextBowFire = bowReload;
 
                         nearestEnemy.addHealth(-attack);
+                        source.Play();
                     }
                 }
                 else {

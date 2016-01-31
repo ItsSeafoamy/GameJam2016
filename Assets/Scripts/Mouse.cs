@@ -6,13 +6,14 @@ public class Mouse : MonoBehaviour {
     Transform mesh;
     public LayerMask tileLayer;
     public static Vector3 MousePosition { get; private set; }
+    GameController control;
     
 
 	void Start () {
         mesh = transform.GetChild(0);
+        control = FindObjectOfType<GameController>();
 	}
 	
-	// Update is called once per frame
 	void Update () {
         mesh.Rotate(0, 1, 0);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -32,6 +33,12 @@ public class Mouse : MonoBehaviour {
 
                             if (node.active) {
                                 GameController.placingObject.transform.position = node.transform.position;
+                                if (GameController.placingObject.GetComponent<Building>().type == Building.Type.WOOD_TOWER)
+                                    control.AddVillagerMaxHealth(2);
+                                else
+                                    if (GameController.placingObject.GetComponent<Building>().type == Building.Type.STONE_TOWER)
+                                    control.AddVillagerDamage(2);
+
                                 GameController.placingObject.layer = 0x0A;
                                 node.active = false;
                                 GameController.placingObject = null;

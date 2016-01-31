@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -143,6 +144,20 @@ public class GameController : MonoBehaviour {
         audioSource.Play();
     }
 
+    public void AddVillagerMaxHealth(int h) {
+        villagers = FindObjectsOfType<Villager>();
+
+        foreach (Villager v in villagers)
+            v.maxHealth = v.maxHealth + h;
+    }
+
+    public void AddVillagerDamage(int d) {
+        villagers = FindObjectsOfType<Villager>();
+
+        foreach (Villager v in villagers)
+            v.attack = v.attack + d;
+    }
+
     void Update() {
         if (woodCount != null)
             woodCount.text = Game.wood.ToString();
@@ -157,7 +172,7 @@ public class GameController : MonoBehaviour {
                 if(selected!=null)
                 detailName.text = selected.getName();
 
-                details.SetActive(true);
+                //details.SetActive(true);
 
                 if (selected is Villager) {
 
@@ -191,6 +206,15 @@ public class GameController : MonoBehaviour {
         InputEnabled = true;
     }
 
+    IEnumerator GameOver() {
+        InputEnabled = false;
+        explorationText.gameObject.SetActive(true);
+        explorationText.text = "The Village is Dead";
+        yield return new WaitForSeconds(5);
+
+        SceneManager.LoadScene("MainMenu");
+    }
+
     //void FadeIn(int i) {
       // if (audioChannels[i].volume < 1)
           // audioChannels[i].volume += 1 * Time.deltaTime;
@@ -205,6 +229,11 @@ public class GameController : MonoBehaviour {
        // Debug.Break();
         print("Humans Sacrificed");
         
+        villagers = FindObjectsOfType<Villager>();
+
+        int random = Random.Range(0, villagers.Length - 1);
+        villagers[random].addHealth(-1000);
+
         difficulty.SetAttack(0);
         StartAttack(0);
         HideRitualScreen();
@@ -214,18 +243,49 @@ public class GameController : MonoBehaviour {
         HideRitualScreen(); 
     }
 
-    public void ResourceSacrifice() {
-        print("Resources Sacrificed");
-        HideRitualScreen();
-        difficulty.SetAttack(1);
-        StartAttack(1);
+    public void WoodSacrifice() {
+        print("Wood Sacrificed");
+
+        int random = Random.Range(0, 1);
+
+        print(difficulty.wood);
+        if (Game.wood >= difficulty.wood) {
+            Game.wood -= difficulty.wood;
+            difficulty.SetAttack(1);
+            StartAttack(1);
+            HideRitualScreen();
+        }
+        else
+            StartCoroutine("ShowText", "Not enough wood");
+    }
+
+    public void StoneSacrifice() {
+        print("Wood Sacrificed");
+
+        int random = Random.Range(0, 1);
+
+        if(Game.stone >= difficulty.stone) {
+            Game.stone -= difficulty.stone;
+            difficulty.SetAttack(2);
+            StartAttack(2);
+            HideRitualScreen();
+        }
+        else
+            StartCoroutine("ShowText", "Not enough stone");
+    }
+
+    IEnumerator ShowText(string text) {
+        explorationText.gameObject.SetActive(true);
+        explorationText.text = text;
+        yield return new WaitForSeconds(1);
+        explorationText.gameObject.SetActive(false);
     }
 
     public void NoSacrifice() {
         print("No Sacrifice");
         HideRitualScreen();
-        difficulty.SetAttack(2);
-        StartAttack(2);
+        difficulty.SetAttack(3);
+        StartAttack(3);
     }
 
     public void Sacrifice() {
@@ -294,7 +354,7 @@ public class GameController : MonoBehaviour {
                 }
                 break;
             case 1:
-                for (int e = 0; e < 5 + difficulty.resource; e++) {
+                for (int e = 0; e < 5 + difficulty.wood; e++) {
                     random = Random.Range(0, 1);
                     if (random == 0) {
                         pos = new Vector3(Random.Range(minX, maxX), 1, Random.Range(minZ, maxZ));
@@ -327,10 +387,15 @@ public class GameController : MonoBehaviour {
         enemies = FindObjectsOfType<Enemy>();
         villagers = FindObjectsOfType<Villager>();
 
-        if (enemies.Length == 0)
+        if (enemies.Length == 0) {
+            foreach (Villager v in villagers)
+                v.ResetHealth();
             ProgressDay();
-        if (villagers.Length == 0)
+        }
+        if (villagers.Length == 0) {
             print("GAME OVER");
+            StartCoroutine("GameOver");
+        }
     }
 
     void Awake() {
