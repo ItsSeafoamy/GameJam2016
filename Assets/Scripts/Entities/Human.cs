@@ -4,6 +4,7 @@ using System.Collections;
 public abstract class Human : Entity {
 
     protected AudioSource source;
+    public AudioClip[] attackClip;
 
 	public enum Item {NULL, SWORD, AXE, PICKAXE, BOW}
 	

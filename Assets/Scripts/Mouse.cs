@@ -7,14 +7,14 @@ public class Mouse : MonoBehaviour {
     public LayerMask tileLayer;
     public static Vector3 MousePosition { get; private set; }
     GameController control;
-    
 
-	void Start () {
+
+    void Start() {
         mesh = transform.GetChild(0);
         control = FindObjectOfType<GameController>();
-	}
-	
-	void Update () {
+    }
+
+    void Update() {
         mesh.Rotate(0, 1, 0);
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -43,12 +43,10 @@ public class Mouse : MonoBehaviour {
                                 node.active = false;
                                 GameController.placingObject = null;
                             }
-
                         }
-
                     }
                 }
             }
         }
-	}
+    }
 }

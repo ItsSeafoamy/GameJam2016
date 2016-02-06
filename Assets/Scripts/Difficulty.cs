@@ -3,15 +3,11 @@ using System.Collections;
 
 public class Difficulty : MonoBehaviour {
 
-    bool easy;
     public int human = 1;
-    bool hard;
     int animal = 0;
-    bool medium;
     public int ns;
     public int wood = 6;
     public int stone = 6;
-    bool hardest;
 
     public void SetAttack(int i) {
         switch (i) {

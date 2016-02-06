@@ -15,10 +15,11 @@ public class GameController : MonoBehaviour {
     public GameObject ritualScreen;
     public GameObject exploreBuildButton;
     public GameObject buildoptions;
-    public GameObject[] ritualButtons;
+    public Text[] ritualButtons;
     public AudioSource audioSource;
     public AudioClip[] musicTrack;
     public Text explorationText;
+    public Text weekText;
     Exploration exploration;
     Difficulty difficulty;
     public Text detailName;
@@ -46,6 +47,11 @@ public class GameController : MonoBehaviour {
     void Start() {
         exploration = GetComponent<Exploration>();
         difficulty = GetComponent<Difficulty>();
+        Game.wood = 0;
+        Game.stone = 0;
+        difficulty.human = 1;
+        difficulty.wood = 6;
+        difficulty.stone = 6;
         InputEnabled = true;
     }
 
@@ -117,6 +123,9 @@ public class GameController : MonoBehaviour {
 
     public void ShowRitualScreen() {
         ritualScreen.SetActive(true);
+        ritualButtons[0].text = "Random Villager: " + difficulty.human+"\n(easy)";
+        ritualButtons[1].text = "Wood: " + difficulty.wood + "\n(hard)";
+        ritualButtons[2].text = "Stone: " + difficulty.stone + "\n(hard)";
     }
     public void HideRitualScreen() {
         ritualScreen.SetActive(false);
@@ -192,6 +201,7 @@ public class GameController : MonoBehaviour {
     public void Explore() {
         if (InputEnabled) {
             explorationText.gameObject.SetActive(true);
+            HideExplorationOptions();
             explorationText.text = exploration.Explore();
             StartCoroutine("Wait");
         }
@@ -298,6 +308,7 @@ public class GameController : MonoBehaviour {
         if (day == 7) {
             day = 1;
             week++;
+            weekText.text = "Weeks Survived: " + week;
         }
         else {
             day++;

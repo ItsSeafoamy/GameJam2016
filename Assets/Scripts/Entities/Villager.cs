@@ -24,7 +24,7 @@ public class Villager : Human {
     public void Update() {
         NavMeshAgent nav = GetComponent<NavMeshAgent>();
         Enemy nearestEnemy = getNearestEnemy();
-
+        nextBowFire -= Time.deltaTime;
         if (nearestEnemy != null && item != Item.SWORD) {
             if (Vector3.Distance(transform.position, nearestEnemy.transform.position) < 5f) {
                 Vector3 dir = transform.position - nearestEnemy.transform.position;
@@ -57,8 +57,6 @@ public class Villager : Human {
                 if (Vector3.Distance(transform.position, nearestEnemy.transform.position) < 2f) {
                     nav.SetDestination(transform.position);
 
-                    nextBowFire -= Time.deltaTime;
-
                     if (nextBowFire <= 0) {
                         nextBowFire = bowReload;
                         nearestEnemy.addHealth(-attack);
@@ -75,8 +73,6 @@ public class Villager : Human {
             if (nearestEnemy != null) {
                 if (Vector3.Distance(transform.position, nearestEnemy.transform.position) < 7f) {
                     nav.SetDestination(transform.position);
-
-                    nextBowFire -= Time.deltaTime;
 
                     if (nextBowFire <= 0) {
                         nextBowFire = bowReload;

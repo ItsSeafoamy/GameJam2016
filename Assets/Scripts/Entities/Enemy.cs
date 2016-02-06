@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System;
+//using System;
 
 public class Enemy : Human {
 
@@ -19,13 +19,21 @@ public class Enemy : Human {
     void Update() {
         NavMeshAgent nav = GetComponent<NavMeshAgent>();
         target = getNearestVillager();
-
+        nextBowFire -= Time.deltaTime;
         if (item == Item.SWORD) {
             if (target != null) {
                 if (Vector3.Distance(transform.position, target.transform.position) < 2f) {
-                    target.addHealth(-attack * Time.deltaTime);
-                    source.Play();
-                    nav.SetDestination(transform.position);
+                    
+                    if (nextBowFire <= 0) {
+                        nextBowFire = bowReload;
+                        target.addHealth(-attack);
+                        //Random
+                        
+                        source.clip = attackClip[Random.Range(0, attackClip.Length)];
+
+                        source.Play();
+                        nav.SetDestination(transform.position);
+                    }
                 }
                 else {
                     nav.SetDestination(target.transform.position);
@@ -37,19 +45,17 @@ public class Enemy : Human {
                 if (Vector3.Distance(transform.position, target.transform.position) < 7f) {
                     nav.SetDestination(transform.position);
 
-                    nextBowFire -= Time.deltaTime;
-
                     if (nextBowFire <= 0) {
                         nextBowFire = bowReload;
-
                         target.addHealth(-attack);
+                        source.clip = attackClip[Random.Range(0, attackClip.Length)];
                         source.Play();
                     }
                 }
 
                 if (target != null) {
                     if (Vector3.Distance(transform.position, target.transform.position) < 1.2f) {
-                        target.addHealth(-attack * Time.deltaTime);
+                        target.addHealth(-attack);
                         source.Play();
                         nav.SetDestination(transform.position);
                     }
