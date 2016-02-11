@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour {
     Villager[] villagers;
 
     //Attack happens on day 7
-    static int day = 1; //Why dis start at 1 (>﹏<) //Cos you start on day one silly!
+    static int day = 1; //Why dis start at 1 (>﹏<) //Cos you start on day one silly! //But we programmers start counting from 0! (TдT)
     static int week = 0;
     public Transform[] enemySpawns;
     public static GameObject placingObject;
@@ -62,63 +62,48 @@ public class GameController : MonoBehaviour {
     public void SpawnWoodenTower() {
         if (placingObject != null)
             Destroy(placingObject.gameObject);
-            
-        if (Game.wood >= 2){
-        	placingObject = (GameObject)Instantiate(woodenTower, Mouse.MousePosition, Quaternion.identity);
-        	text.text = "WoodenTower";
-            Game.wood -= 2;
-        } else {
-        	text.text = "You need " + (2-Game.wood) + " more wood to build this";
-        }
+
+        placingObject = (GameObject)Instantiate(woodenTower, Mouse.MousePosition, Quaternion.identity);
+        text.text = "WoodenTower";
     }
+
     public void SpawnStoneTower() {
         if (placingObject != null)
             Destroy(placingObject.gameObject);
-            
-        if (Game.stone >= 2){
-       	 	placingObject = (GameObject)Instantiate(stoneTower, Mouse.MousePosition, Quaternion.identity);
-        	text.text = "StoneTower";
-            Game.stone -= 2;
-        } else {
-        	text.text = "You need " + (2-Game.stone) + " more stone to build this";
-        }
-    }
-    public void SpawnBuilding() {
-        if (placingObject != null)
-            Destroy(placingObject.gameObject);
 
-        if (Game.wood >= 3 && Game.stone >= 2) {
-            placingObject = (GameObject)Instantiate(building, Mouse.MousePosition, Quaternion.identity);
-            text.text = "Building";
-            Game.wood -= 3;
-            Game.stone -= 2;
-        }
-        else
-            text.text = "You need " + (2 - Game.stone) + " more stone and " + (3 - Game.wood) + " more wood to build this";
+        placingObject = (GameObject)Instantiate(stoneTower, Mouse.MousePosition, Quaternion.identity);
+        text.text = "StoneTower";
+
     }
+
+    //public void SpawnBuilding() {
+    //    if (placingObject != null)
+    //        Destroy(placingObject.gameObject);
+
+    //    if (Game.wood >= 3 && Game.stone >= 2) {
+    //        placingObject = (GameObject)Instantiate(building, Mouse.MousePosition, Quaternion.identity);
+    //        text.text = "Building";
+    //        Game.wood -= 3;
+    //        Game.stone -= 2;
+    //    }
+    //    else
+    //        text.text = "You need " + (2 - Game.stone) + " more stone and " + (3 - Game.wood) + " more wood to build this";
+    //}
+
     public void SpawnQuarry() {
         if (placingObject != null)
             Destroy(placingObject.gameObject);
 
-        if (Game.stone >= 10) {
-            placingObject = (GameObject)Instantiate(quarry, Mouse.MousePosition, Quaternion.identity);
-            text.text = "Quarry";
-            Game.stone -= 10;
-        }
-        else
-            text.text = "You need " + (10 - Game.stone) + " more stone to build this";
+        placingObject = (GameObject)Instantiate(quarry, Mouse.MousePosition, Quaternion.identity);
+        text.text = "Quarry";
     }
+
     public void SpawnLogPost() {
         if (placingObject != null)
             Destroy(placingObject.gameObject);
 
-        if (Game.wood >= 10) {
-            placingObject = (GameObject)Instantiate(logPost, Mouse.MousePosition, Quaternion.identity);
-            text.text = "Logging Post";
-            Game.wood -= 10;
-        }
-        else
-            text.text = "You need " + (10 - Game.wood) + " more wood to build this";
+        placingObject = (GameObject)Instantiate(logPost, Mouse.MousePosition, Quaternion.identity);
+        text.text = "Logging Post";
     }
 
     public void ShowRitualScreen() {
